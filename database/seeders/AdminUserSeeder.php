@@ -22,6 +22,7 @@ class AdminUserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'type' => 'admin',
             'is_active' => true,
+            'department_id' => 1, // التسويق الرقمي
         ]);
 
         // إنشاء الموظف - محمد الباقر
@@ -32,6 +33,7 @@ class AdminUserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'type' => 'employee',
             'is_active' => true,
+            'department_id' => 2, // المبيعات
         ]);
     }
 }

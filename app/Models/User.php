@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'type',
         'is_active',
+        'department_id',
     ];
 
     /**
@@ -48,6 +49,14 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Get the department that owns the user.
+     */
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 
     /**

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, usePage, router } from '@inertiajs/react';
+import Flash from '@/Components/Flash';
 
 export default function AdminLayout({ children, title = 'لوحة تحكم الأدمن' }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -90,8 +91,12 @@ export default function AdminLayout({ children, title = 'لوحة تحكم ال�
     };
 
     const getCurrentPageInfo = () => {
-        const currentItem = navigation.find(item => url.startsWith(item.href));
-        return currentItem || navigation[0];
+        // Find exact match first, then fallback to startsWith
+        const exactMatch = navigation.find(item => url === item.href);
+        if (exactMatch) return exactMatch;
+
+        const startsWithMatch = navigation.find(item => url.startsWith(item.href) && item.href !== '/admin');
+        return startsWithMatch || navigation[0];
     };
 
     const formatTime = (date) => {
@@ -114,6 +119,7 @@ export default function AdminLayout({ children, title = 'لوحة تحكم ال�
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col" dir="rtl">
             <Head title={`${title} - ${user?.name || 'AdManager Pro'}`} />
+            <Flash />
 
             {/* Header */}
             <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm sticky top-0 z-50">
@@ -278,14 +284,14 @@ export default function AdminLayout({ children, title = 'لوحة تحكم ال�
                                             }
                                         }}
                                         className={`w-full flex items-center px-3 sm:px-4 py-3.5 sm:py-4 md:py-2.5 text-right rounded-xl transition-all duration-200 group ${
-                                            url.startsWith(item.href)
+                                            (url === item.href || (url.startsWith(item.href) && item.href !== '/admin'))
                                                 ? 'bg-blue-50 text-blue-700 shadow-sm border-l-2 border-blue-500'
                                                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 active:bg-gray-100'
                                         }`}
                                     >
                                         <svg
                                             className={`mr-2.5 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6 md:w-5 md:h-5 ${
-                                                url.startsWith(item.href) ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600'
+                                                (url === item.href || (url.startsWith(item.href) && item.href !== '/admin')) ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600'
                                             } transition-colors duration-200`}
                                             fill="none"
                                             stroke="currentColor"
@@ -294,16 +300,16 @@ export default function AdminLayout({ children, title = 'لوحة تحكم ال�
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
                                         </svg>
                                         <div className="flex-1 text-right">
-                                            <div className={`text-sm sm:text-base md:text-sm font-medium ${url.startsWith(item.href) ? 'text-blue-900' : ''}`}>
+                                            <div className={`text-sm sm:text-base md:text-sm font-medium ${(url === item.href || (url.startsWith(item.href) && item.href !== '/admin')) ? 'text-blue-900' : ''}`}>
                                                 {item.name}
                                             </div>
                                             <div className={`text-xs sm:text-sm md:text-xs mt-0.5 sm:mt-1 md:mt-0.5 ${
-                                                url.startsWith(item.href) ? 'text-blue-600' : 'text-gray-500'
+                                                (url === item.href || (url.startsWith(item.href) && item.href !== '/admin')) ? 'text-blue-600' : 'text-gray-500'
                                             }`}>
                                                 {item.description}
                                             </div>
                                         </div>
-                                        {url.startsWith(item.href) && (
+                                        {(url === item.href || (url.startsWith(item.href) && item.href !== '/admin')) && (
                                             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-2 md:h-2 bg-blue-500 rounded-full"></div>
                                         )}
                                     </Link>
