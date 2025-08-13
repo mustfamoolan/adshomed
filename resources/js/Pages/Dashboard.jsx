@@ -1,0 +1,154 @@
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head } from '@inertiajs/react';
+
+export default function Dashboard() {
+    const stats = [
+        {
+            title: 'إجمالي العملاء',
+            value: '1,250',
+            change: '+12%',
+            changeType: 'increase',
+            icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+        },
+        {
+            title: 'الحملات النشطة',
+            value: '28',
+            change: '+8%',
+            changeType: 'increase',
+            icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'
+        },
+        {
+            title: 'المشاريع الجارية',
+            value: '45',
+            change: '+15%',
+            changeType: 'increase',
+            icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'
+        },
+        {
+            title: 'الإيرادات الشهرية',
+            value: '₦850K',
+            change: '+22%',
+            changeType: 'increase',
+            icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+        }
+    ];
+
+    const recentActivities = [
+        {
+            type: 'client_added',
+            title: 'عميل جديد مضاف',
+            description: 'تم إضافة شركة الإمارات للتجارة',
+            time: 'منذ 5 دقائق',
+            icon: '👤'
+        },
+        {
+            type: 'campaign_started',
+            title: 'بدء حملة إعلانية',
+            description: 'حملة التسويق الرقمي لمنتج XYZ',
+            time: 'منذ 15 دقيقة',
+            icon: '📢'
+        },
+        {
+            type: 'project_completed',
+            title: 'مشروع مكتمل',
+            description: 'تطوير موقع شركة ABC',
+            time: 'منذ ساعة',
+            icon: '✅'
+        },
+        {
+            type: 'report_generated',
+            title: 'تقرير جديد',
+            description: 'تقرير الأداء الشهري',
+            time: 'منذ ساعتين',
+            icon: '📊'
+        }
+    ];
+
+    return (
+        <AdminLayout title="لوحة التحكم الرئيسية">
+            <Head title="لوحة التحكم" />
+
+            <div className="space-y-6">
+                {/* Welcome Section */}
+                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 text-white">
+                    <h2 className="text-2xl font-bold mb-2">مرحباً بك في لوحة التحكم</h2>
+                    <p className="text-blue-100">إدارة متقدمة وشاملة لعملائك وحملاتك الإعلانية</p>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {stats.map((stat, index) => (
+                        <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={stat.icon} />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600">{stat.title}</p>
+                                        <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                                    </div>
+                                </div>
+                                <div className={`text-sm font-medium ${
+                                    stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600'
+                                }`}>
+                                    {stat.change}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Recent Activities */}
+                    <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200">
+                        <div className="p-6 border-b border-gray-200">
+                            <h3 className="text-lg font-semibold text-gray-900">النشاطات الأخيرة</h3>
+                        </div>
+                        <div className="p-6">
+                            <div className="space-y-4">
+                                {recentActivities.map((activity, index) => (
+                                    <div key={index} className="flex items-start space-x-3">
+                                        <div className="flex-shrink-0 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-lg">
+                                            {activity.icon}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium text-gray-900">{activity.title}</p>
+                                            <p className="text-sm text-gray-500">{activity.description}</p>
+                                            <p className="text-xs text-gray-400 mt-1">{activity.time}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="bg-white rounded-xl border border-gray-200">
+                        <div className="p-6 border-b border-gray-200">
+                            <h3 className="text-lg font-semibold text-gray-900">إجراءات سريعة</h3>
+                        </div>
+                        <div className="p-6">
+                            <div className="space-y-3">
+                                <button className="w-full bg-blue-600 text-white rounded-lg px-4 py-3 text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
+                                    إضافة عميل جديد
+                                </button>
+                                <button className="w-full bg-green-600 text-white rounded-lg px-4 py-3 text-sm font-medium hover:bg-green-700 transition-colors duration-200">
+                                    إنشاء حملة إعلانية
+                                </button>
+                                <button className="w-full bg-purple-600 text-white rounded-lg px-4 py-3 text-sm font-medium hover:bg-purple-700 transition-colors duration-200">
+                                    بدء مشروع جديد
+                                </button>
+                                <button className="w-full bg-orange-600 text-white rounded-lg px-4 py-3 text-sm font-medium hover:bg-orange-700 transition-colors duration-200">
+                                    عرض التقارير
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AdminLayout>
+    );
+}
