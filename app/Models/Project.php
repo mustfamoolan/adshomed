@@ -64,6 +64,14 @@ class Project extends Model
     }
 
     /**
+     * Get the campaigns for the project.
+     */
+    public function campaigns(): HasMany
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
+    /**
      * Get the platforms for the project.
      */
     public function platforms(): HasMany
